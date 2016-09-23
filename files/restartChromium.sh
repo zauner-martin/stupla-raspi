@@ -16,7 +16,7 @@ STARTTIME_URL_02=17
 START_COMMAND="chromium-browser"
 # Flags from: http://peter.sh/examples/?/chromium-switches.html
 #OPTIONS="--kiosk --no-default-browser-check --disable-translate"
-OPTIONS="--start-fullscreen --no-default-browser-check --disable-translate --disable-session-crashed-bubble"
+OPTIONS="--start-fullscreen --no-default-browser-check --disable-translate --disable-session-crashed-bubble --disable-infobars"
 
 CURRENT_HOUR=$(date +%H)
 #for testing: 

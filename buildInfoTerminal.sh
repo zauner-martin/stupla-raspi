@@ -50,7 +50,7 @@ echo "stop screensaver"
 # /etc/xdg/lxsession/LXDE/autostart
 # did not work
 
-file= /etc/lightdm/lightdm.conf
+file="/etc/lightdm/lightdm.conf"
 if [ ! -f $file".original" ]; 
 then
 	cp $file $file".original"
