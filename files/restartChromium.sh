@@ -2,8 +2,8 @@
 
 # URLs for "Supplierplan"
 URL_01="https://asopo.webuntis.com/WebUntis/monitor?school=brg-app&monitorType=subst&format=Schueler_2_Tage"
-#URL_02="https://asopo.webuntis.com/WebUntis/monitor?school=gfb-app&monitorType=subst&format=Monitor%20in%20der%20Aula"
-URL_02="www.google.at"
+URL_02="https://asopo.webuntis.com/WebUntis/monitor?school=gfb-app&monitorType=subst&format=Schueler_2_Tage"
+#URL_02="http://www.abendgym.tsn.at"
 # Starttime for URL_01
 # Show always URL_01 or URL_02
 # STARTTIME_URL_01=0 && STARTTIME_URL_02=24 => always display URL_01 
