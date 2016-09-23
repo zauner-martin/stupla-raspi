@@ -4,13 +4,27 @@
 #echo "change password for user pi from standard >>raspberry<< to an more secure:"
 #passwd pi
 
+
+#################################################################################
+echo "install CHROMIUM"
+
+wget -qO - http://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
+echo "deb http://dl.bintray.com/kusti8/chromium-rpi jessie main" | sudo tee -a /etc/apt/sources.list
+
+apt-get update
+apt-get -y install chromium-browser
+
+
 #################################################################################
 echo "install mc & x11vnc"
-apt-get update
+
 apt-get -y install mc x11vnc
 
 echo "ask for Password for x11vnc"
-x11vnc -storepasswd
+# run x11vnc -storepasswd as user pi
+su -c 'x11vnc -storepasswd' pi
+
+
 
 #################################################################################
 echo "change keyboard setting for virtual terminals to german:"
@@ -23,6 +37,7 @@ fi
 sed -e "{
 	/XKBLAYOUT=/ s/XKBLAYOUT=\"gb\"/XKBLAYOUT=\"de\"/
 }" -i $file
+
 
 #################################################################################
 echo "stop screensaver"
@@ -53,6 +68,7 @@ cp files/restartChromium.sh /usr/local/bin/restartChromium.sh
 chown root:staff /usr/local/bin/restartChromium.sh
 chmod 755 /usr/local/bin/restartChromium.sh
 
+
 #################################################################################
 echo "create cronjob in /etc/cron.hourly"
 
@@ -66,6 +82,7 @@ su -c '/usr/local/bin/restartChromium.sh' pi
 chown root:root /etc/cron.hourly/restartChromium
 chmod 755 /etc/cron.hourly/restartChromium
 
+
 #################################################################################
 echo "
 install Desktop-Files for automatic startup of:
@@ -73,7 +90,9 @@ x11vnc remote control
 &
 Chromium
 "
-mkdir .config/autostart
+AUTOSTARTDIR="/home/pi/.config/autostart"
+
+mkdir $AUTOSTARTDIR
 
 echo "[Desktop Entry]
 Encoding=UTF-8
@@ -84,7 +103,7 @@ Exec=x11vnc -forever -usepw -httpport 5900
 StartupNotify=false
 Terminal=false
 Hidden=false
-" >> .config/autostart/x11vnc.desktop
+" >>  $AUTOSTARTDIR/x11vnc.desktop
 
 echo "[Desktop Entry]
 Encoding=UTF-8
@@ -95,8 +114,8 @@ Exec=/usr/local/bin/restartChromium.sh
 StartupNotify=false
 Terminal=false
 Hidden=false
-" >> .config/autostart/Chromium-Starter.desktop
+" >>  $AUTOSTARTDIR/Chromium-Starter.desktop
 
-chown -v -R pi:pi .config/autostart
+chown -v -R pi:pi $AUTOSTARTDIR
 
 
