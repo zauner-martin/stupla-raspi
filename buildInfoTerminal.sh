@@ -8,22 +8,26 @@
 #################################################################################
 echo "install CHROMIUM"
 
-wget -qO - http://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
-echo "deb http://dl.bintray.com/kusti8/chromium-rpi jessie main" | sudo tee -a /etc/apt/sources.list
+if [ "$(dpkg -l | grep chromium-browser" = "" ];
+then
+	wget -qO - http://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
+	echo "deb http://dl.bintray.com/kusti8/chromium-rpi jessie main" | sudo tee -a /etc/apt/sources.list
 
-apt-get update
-apt-get -y install chromium-browser
-
+	apt-get update
+	apt-get -y install chromium-browser
+fi
 
 #################################################################################
 echo "install mc & x11vnc"
 
-apt-get -y install mc x11vnc
+if [ "$(dpkg -l | grep x11vnc" = "" ];
+then
+	apt-get -y install mc x11vnc
 
-echo "ask for Password for x11vnc"
-# run x11vnc -storepasswd as user pi
-su -c 'x11vnc -storepasswd' pi
-
+	echo "ask for Password for x11vnc"
+	# run x11vnc -storepasswd as user pi
+	su -c 'x11vnc -storepasswd' pi
+fi
 
 
 #################################################################################
@@ -76,7 +80,7 @@ echo "#!/bin/bash
 export DISPLAY=:0
 XAUTHORITY=/home/pi/.Xauthority
 su -c '/usr/local/bin/restartChromium.sh' pi
-" >> /etc/cron.hourly/restartChromium
+" > /etc/cron.hourly/restartChromium
 
 chown root:root /etc/cron.hourly/restartChromium
 chmod 755 /etc/cron.hourly/restartChromium
@@ -102,7 +106,7 @@ Exec=x11vnc -forever -usepw -httpport 5900
 StartupNotify=false
 Terminal=false
 Hidden=false
-" >>  $AUTOSTARTDIR/x11vnc.desktop
+" >  $AUTOSTARTDIR/x11vnc.desktop
 
 echo "[Desktop Entry]
 Encoding=UTF-8
@@ -113,7 +117,7 @@ Exec=/usr/local/bin/restartChromium.sh
 StartupNotify=false
 Terminal=false
 Hidden=false
-" >>  $AUTOSTARTDIR/Chromium-Starter.desktop
+" >  $AUTOSTARTDIR/Chromium-Starter.desktop
 
 chown -v -R pi:pi $AUTOSTARTDIR
 
