@@ -72,8 +72,7 @@ chmod 755 /usr/local/bin/restartChromium.sh
 #################################################################################
 echo "create cronjob in /etc/cron.hourly"
 
-echo "
-#!/bin/bash
+echo "#!/bin/bash
 export DISPLAY=:0
 XAUTHORITY=/home/pi/.Xauthority
 su -c '/usr/local/bin/restartChromium.sh' pi

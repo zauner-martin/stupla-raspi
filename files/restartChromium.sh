@@ -2,8 +2,8 @@
 
 # URLs for "Supplierplan"
 URL_01="https://asopo.webuntis.com/WebUntis/monitor?school=brg-app&monitorType=subst&format=Schueler_2_Tage"
-URL_02="https://asopo.webuntis.com/WebUntis/monitor?school=gfb-app&monitorType=subst&format=Schueler_2_Tage"
-#URL_02="http://www.abendgym.tsn.at"
+URL_02="https://neilo.webuntis.com/WebUntis/monitor?school=bg-wiku-innsbruck&monitorType=subst&format=Schueler_2_Tage"
+
 # Starttime for URL_01
 # Show always URL_01 or URL_02
 # STARTTIME_URL_01=0 && STARTTIME_URL_02=24 => always display URL_01 
@@ -19,8 +19,7 @@ START_COMMAND="chromium-browser"
 OPTIONS="--start-fullscreen --no-default-browser-check --disable-translate --disable-session-crashed-bubble --disable-infobars"
 
 CURRENT_HOUR=$(date +%H)
-#for testing: 
-CURRENT_HOUR="5"
+#for testing: CURRENT_HOUR="5"
 if [ "$CURRENT_HOUR" -ge "$STARTTIME_URL_01" ] && [ "$CURRENT_HOUR" -lt "$STARTTIME_URL_02" ];
 then
 	URL_OK=$URL_01
@@ -31,7 +30,7 @@ else
 fi
 
 # check, if Browser is running with wrong URL
-BROWSER_PID=$(ps ax | grep -e "$START_COMMAND" | grep -e "$URL_KO" | cut --delimiter=' ' --field=2)
+BROWSER_PID=$(ps ax | grep -e "$START_COMMAND" | grep -e "$URL_KO" | awk '{print $1}')
 # restart browser, if running with wrong URL
 if [ ! "$BROWSER_PID" = "" ];
 then
@@ -41,7 +40,7 @@ then
 	$START_COMMAND $OPTIONS $URL_OK &
 fi
 # check, if browser was startet at all
-BROWSER_PID=$(ps ax | grep -e "$START_COMMAND" | grep -e "$URL_OK" | cut --delimiter=' ' --field=2)
+BROWSER_PID=$(ps ax | grep -e "$START_COMMAND" | grep -e "$URL_OK" | awk '{print $1}')
 if [ "$BROWSER_PID" = "" ];
 then
 	echo "starting Browser with URL: $URL_OK"
