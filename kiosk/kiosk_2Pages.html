@@ -15,16 +15,17 @@
 	<script>
 		// TODO: FIX HEADERs & URLs & TIME here!!
 		// Heading shown for URLs
-		var header1="Supplierplan Schülerinnen &amp; Schüler BRG Innsbruck";
-		var header2="Supplierplan Studierende Abendgymnasium";
+		var header1="Supplierplan Schülerinnen &amp; Schüler am BRG Innsbruck";
+		var header2="Supplierplan Studierende am Abendgymnasium";
 		// URLs, shown by Website
 		var url1="https://asopo.webuntis.com/WebUntis/monitor?school=brg-app&monitorType=subst&format=Schueler_2_Tage";
 		var url2="https://neilo.webuntis.com/WebUntis/monitor?school=bg-wiku-innsbruck&monitorType=subst&format=Schueler_2_Tage";
 		// time to show url1
-		var url1StartTime = 13;
-		var url1StopTime = 15;
+		var url1StartTime = 5;
+		var url1StopTime = 17;
 		
 		// header and url, which will be shown depending on the time
+		// have to global, because we check changes via currentHeader
 		var currentHeader = "";
 		var currentUrl = "";
 		
@@ -36,13 +37,14 @@
 			if (hasToBeReloaded) {
 				window.location.reload(true);
 			}
-		}, 30000);
+		}, 300000);
 
 		function checkAndFixURL() {
-			console.log("checkAndFixURL");
+			console.log("checkAndFixURL at: " + new Date());
 			// get current hour
-			//var currentHour = new Date().getHours();
-			var currentHour = new Date().getMinutes();
+			var currentHour = new Date().getHours();
+			// for testing
+			//var currentHour = new Date().getMinutes();
 			
 			hasToBeReloaded = false;
 			// check for time intervall [url1StartTime,url1StopTime)
@@ -52,7 +54,6 @@
 					currentHeader = header1;
 					currentUrl = url1;
 					hasToBeReloaded = true;
-					console.log("and change to " + currentHeader);
 				}
 			// check for time intervall NOT [url1StartTime,url1StopTime)
 			} else {
@@ -60,11 +61,11 @@
 					currentHeader = header2;
 					currentUrl = url2;
 					hasToBeReloaded = true;
-					console.log("and change to " + currentHeader);
 				}
 			}
 			// if, to seperate innerHTML Statements
 			if (hasToBeReloaded) {
+				console.log("and change to: " + currentHeader);
 				document.getElementById("head").innerHTML = currentHeader;
 				document.getElementById("content").innerHTML = "<object type=\"text/html\" data=" + currentUrl + " style=\"width: 100%; height: 90%;\"></object>";
 			}
