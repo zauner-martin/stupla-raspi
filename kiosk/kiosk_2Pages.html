@@ -1,0 +1,76 @@
+<!-- <!DOCTYPE HTML> -->
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Supplierplan</title>
+</head>
+
+<body onload="checkAndFixURL()">
+
+	<h1 id="head"></h1>
+
+	<div id="content" style="width:100%; height:100%;"></div>
+
+
+	<script>
+		// TODO: FIX HEADERs & URLs & TIME here!!
+		// Heading shown for URLs
+		var header1="Supplierplan Schülerinnen &amp; Schüler BRG Innsbruck";
+		var header2="Supplierplan Studierende Abendgymnasium";
+		// URLs, shown by Website
+		var url1="https://asopo.webuntis.com/WebUntis/monitor?school=brg-app&monitorType=subst&format=Schueler_2_Tage";
+		var url2="https://neilo.webuntis.com/WebUntis/monitor?school=bg-wiku-innsbruck&monitorType=subst&format=Schueler_2_Tage";
+		// time to show url1
+		var url1StartTime = 13;
+		var url1StopTime = 15;
+		
+		// header and url, which will be shown depending on the time
+		var currentHeader = "";
+		var currentUrl = "";
+		
+		var hasToBeReloaded;
+
+		// set the timeout accordingly (in milliseconds); 5mins = 300000ms seems reasonable
+		setInterval( function() { 
+			checkAndFixURL();
+			if (hasToBeReloaded) {
+				window.location.reload(true);
+			}
+		}, 30000);
+
+		function checkAndFixURL() {
+			console.log("checkAndFixURL");
+			// get current hour
+			//var currentHour = new Date().getHours();
+			var currentHour = new Date().getMinutes();
+			
+			hasToBeReloaded = false;
+			// check for time intervall [url1StartTime,url1StopTime)
+			if (currentHour >= url1StartTime && currentHour < url1StopTime) {
+				// check for URL header1
+				if (currentHeader != header1) {
+					currentHeader = header1;
+					currentUrl = url1;
+					hasToBeReloaded = true;
+					console.log("and change to " + currentHeader);
+				}
+			// check for time intervall NOT [url1StartTime,url1StopTime)
+			} else {
+				if (currentHeader != header2) {
+					currentHeader = header2;
+					currentUrl = url2;
+					hasToBeReloaded = true;
+					console.log("and change to " + currentHeader);
+				}
+			}
+			// if, to seperate innerHTML Statements
+			if (hasToBeReloaded) {
+				document.getElementById("head").innerHTML = currentHeader;
+				document.getElementById("content").innerHTML = "<object type=\"text/html\" data=" + currentUrl + " style=\"width: 100%; height: 90%;\"></object>";
+			}
+		}
+	</script>
+
+</body>
+
+</html>

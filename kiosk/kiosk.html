@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Supplierplan Infosite</title>
+</head>
+
+<body>
+
+	<h1>Infosite for Web Untis Supplierplan</h1>
+	<h2>Background Info</h2>
+	<p>Chromium browser is automatically startet by file:</p>
+	<ul><li>/home/pi/.config/autostart/Chromium-Starter.desktop</li></ul>
+	<p>with local website:</p>
+	<ul><li>/home/pi/kiosk/kiosk.html</li></ul>
+	<h2>What you have to to:</h2>
+	<ol>
+		<li>stop fullscreen modus with F11 and stop Chromium</li>
+		<li>open Directory /home/pi/kiosk with fileexplorer</li>
+		<li>rename kiosk.html to kiosk.original.html</li>
+		<li>
+			copy kiosk_1Page.html to kiosk.html, if you need <strong>ONE</strong> kioskpages <br>
+			copy kiosk_2Pages.html to kiosk.html, if you need <strong>TWO</strong> kioskpages
+		</li>
+		<li>
+			open new kiosk.html in texteditor and change variable:
+			<ol>
+				<li>header, or header1/header2</li>
+				<li>url, or url1/url2</li>
+			</ol>
+			to your needs.
+		</li>
+		<li>start Chromium with</li>
+	</ol>
+
+</body>
+
+</html>

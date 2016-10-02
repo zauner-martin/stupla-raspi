@@ -1,33 +1,19 @@
 #! /bin/bash
 
-#################################################################################
-#echo "change password for user pi from standard >>raspberry<< to an more secure:"
-#passwd pi
-
-
-#################################################################################
-echo "install CHROMIUM"
-
-if [ "$(dpkg -l | grep chromium-browser" = "" ];
-then
-	wget -qO - http://bintray.com/user/downloadSubjectPublicKey?username=bintray | sudo apt-key add -
-	echo "deb http://dl.bintray.com/kusti8/chromium-rpi jessie main" | sudo tee -a /etc/apt/sources.list
-
-	apt-get update
-	apt-get -y install chromium-browser
-fi
 
 #################################################################################
 echo "install mc & x11vnc"
 
-if [ "$(dpkg -l | grep x11vnc" = "" ];
+if [ "$(dpkg -l | grep x11vnc)" = "" ];
 then
+	apt-get update
 	apt-get -y install mc x11vnc
 
 	echo "ask for Password for x11vnc"
 	# run x11vnc -storepasswd as user pi
 	su -c 'x11vnc -storepasswd' pi
 fi
+
 
 
 #################################################################################
@@ -65,25 +51,9 @@ sed -e "{
 
 
 #################################################################################
-echo "copy restartChromium.sh to /usr/local/bin/restartChromium.sh"
+echo "copy kiosk to /home/pi"
 
-cp files/restartChromium.sh /usr/local/bin/restartChromium.sh
-
-chown root:staff /usr/local/bin/restartChromium.sh
-chmod 755 /usr/local/bin/restartChromium.sh
-
-
-#################################################################################
-echo "create cronjob in /etc/cron.hourly"
-
-echo "#!/bin/bash
-export DISPLAY=:0
-XAUTHORITY=/home/pi/.Xauthority
-su -c '/usr/local/bin/restartChromium.sh' pi
-" > /etc/cron.hourly/restartChromium
-
-chown root:root /etc/cron.hourly/restartChromium
-chmod 755 /etc/cron.hourly/restartChromium
+cp -R -v kiosk /home/pi
 
 
 #################################################################################
