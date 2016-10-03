@@ -30,22 +30,26 @@
 		var currentUrl = "";
 		
 		var hasToBeReloaded;
-
+		
+		// set the timeout accordingly (in milliseconds); 5mins = 300000ms seems reasonable
+		var checkAndFixTime = 300000;
+		
 		// set the timeout accordingly (in milliseconds); 5mins = 300000ms seems reasonable
 		setInterval( function() { 
 			checkAndFixURL();
 			if (hasToBeReloaded) {
 				window.location.reload(true);
 			}
-		}, 300000);
+		}, checkAndFixTime);
 
 		function checkAndFixURL() {
+	
 			console.log("checkAndFixURL at: " + new Date());
+
 			// get current hour
-			var currentHour = new Date().getHours();
-			// for testing
-			//var currentHour = new Date().getMinutes();
-			
+			//currentHour = new Date().getHours();
+			currentHour = new Date().getMinutes();
+		
 			hasToBeReloaded = false;
 			// check for time intervall [url1StartTime,url1StopTime)
 			if (currentHour >= url1StartTime && currentHour < url1StopTime) {
@@ -55,14 +59,22 @@
 					currentUrl = url1;
 					hasToBeReloaded = true;
 				}
+				else {
+					console.log("and use unchanged header: " + currentHeader);
+				}
 			// check for time intervall NOT [url1StartTime,url1StopTime)
-			} else {
+			} 
+			else {
+				// check for URL header2
 				if (currentHeader != header2) {
 					currentHeader = header2;
 					currentUrl = url2;
 					hasToBeReloaded = true;
 				}
-			}
+				else {
+					console.log("and use unchanged header: " + currentHeader);
+				}
+			} 
 			// if, to seperate innerHTML Statements
 			if (hasToBeReloaded) {
 				console.log("and change to: " + currentHeader);
