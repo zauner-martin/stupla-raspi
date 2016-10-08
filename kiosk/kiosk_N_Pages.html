@@ -1,0 +1,104 @@
+<!-- <!DOCTYPE HTML> -->
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Supplierplan</title>
+	<style>
+		#head {
+			font-size:120%;
+			font-weight: bold;
+			color:#FF9900;
+		}
+	</style>
+</head>
+
+<body onload="createAllTimerIntervals()">
+
+	<p id="head"></p>
+
+	<div id="content" style="width:100%; height:100%;"></div>
+
+	<script>
+		// set the timeout accordingly (in milliseconds); 5mins = 300000ms seems reasonable
+		var timeToCheckForRightURL = 300000;
+		
+		// set time and info for your intervals here
+		function createAllTimerIntervals() {
+			console.log("into createIntervals()");
+			TimeIntervals.push(new TimeInterval(	
+			/* START TIME */	0,
+			/* END TIME */		17,
+			/* HEADER (IDENTIFIYING THE DIFFERENT INTERVALS */
+								"Supplierplan Schülerinnen &amp; Schüler am BRG Innsbruck",
+			/* URL SHOWN BEYOND HEADER */
+								"https://asopo.webuntis.com/WebUntis/monitor?school=brg-app&monitorType=subst&format=Schueler_2_Tage"
+								));
+			TimeIntervals.push(new TimeInterval(	
+								17,
+								24,
+								"Supplierplan Studierende am Abendgymnasium",
+								"https://neilo.webuntis.com/WebUntis/monitor?school=bg-wiku-innsbruck&monitorType=subst&format=Schueler_2_Tage"
+								));
+			TimeIntervals.push(new TimeInterval(	
+								0,
+								0,
+								"Supplierplan Lehrerinnen &amp; Lehrer am BRG Innsbruck",
+								"https://asopo.webuntis.com/WebUntis/monitor?school=brg-app&monitorType=subst&format==Lehrer_2_Tage"
+								));
+			TimeIntervals.push(new TimeInterval(	
+								0,
+								0,
+								"Supplierplan Lehrerinnen &amp; Lehrer am GfB Innsbruck",
+								"https://neilo.webuntis.com/WebUntis/monitor?school=bg-wiku-innsbruck&monitorType=subst&format=Lehrer_2_Tage"
+								));
+			checkForNewInterval();
+		}
+		
+		// fix, if you want intervalls in minutes or hours
+		function checkForNewInterval() {
+			var hasToBeReloaded = false;
+			var currentTime = new Date().getHours();
+			//var currentTime = new Date().getMinutes();
+			for (var i = 0; i < TimeIntervals.length; i++) {
+				hasToBeReloaded = hasToBeReloaded || TimeIntervals[i].checkAndFixURL(currentTime);
+			}
+			return hasToBeReloaded;
+		}
+
+		
+		setInterval( function() { 
+			console.log("checkAndFixURL at: " + new Date());
+			if (checkForNewInterval()) {
+				window.location.reload(true);
+			}
+		}, timeToCheckForRightURL);
+
+	
+		// TimerIntervall Object
+		function TimeInterval(startTime,endTime,header,url) {
+			console.log("into TimeInterval()");
+			this.startTime = startTime;
+			this.endTime = endTime;
+			this.header = header;
+			this.url = url;
+			this.checkAndFixURL = function(currentTime) {
+				hasToBeReloaded = false;
+				if ((this.startTime <= currentTime 
+					&& currentTime < this.endTime
+					&& document.getElementById("head").innerHTML != this.header)) 
+				{
+						console.log("change to URL:  " + url);
+						document.getElementById("head").innerHTML = this.header;
+						document.getElementById("content").innerHTML = "<object type=\"text/html\" data=" + this.url + " style=\"width: 100%; height: 90%;\"></object>";
+						return true;
+				}
+			};
+		}
+		// Array of TimerIntervall Objects
+		var TimeIntervals = [];
+		
+	</script>
+
+</body>
+
+</html>

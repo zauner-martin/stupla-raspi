@@ -4,6 +4,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Supplierplan Infosite</title>
+	<style>
+		li {
+			padding-bottom: 5px;
+		}
+	</style>
 </head>
 
 <body>
@@ -20,14 +25,15 @@
 		<li>open Directory /home/pi/kiosk with fileexplorer</li>
 		<li>rename kiosk.html to kiosk.original.html</li>
 		<li>
-			copy kiosk_1Page.html to kiosk.html, if you need <strong>ONE</strong> kioskpages <br>
-			copy kiosk_2Pages.html to kiosk.html, if you need <strong>TWO</strong> kioskpages
+			copy kiosk_1_Page.html to kiosk.html, if you need <strong>ONE</strong> kioskpages <br>
+			copy kiosk_N_Pages.html to kiosk.html, if you need <strong>TWO or MORE</strong> kioskpages
 		</li>
 		<li>
 			open new kiosk.html in texteditor and change variable:
 			<ol>
-				<li>header, or header1/header2</li>
-				<li>url, or url1/url2</li>
+				<li>header, or header1/header2/...</li>
+				<li>url, or url1/url2/...</li>
+				<li>if you need page changes in minutes instead hours, fix "var currentTime = new Date().getHours();" to "var currentTime = new Date().getMinutes();"</li>
 			</ol>
 			to your needs.
 		</li>
