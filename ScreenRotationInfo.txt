@@ -1,0 +1,15 @@
+
+For Rotation of Screen:
+
+sudo nano /boot/config.txt
+
+and add:
+
+rotate 90 degrees to the right:
+display_rotate=1
+
+rotate 180 degrees to the right:
+display_rotate=2
+
+rotate 270 degrees to the right:
+display_rotate=3
