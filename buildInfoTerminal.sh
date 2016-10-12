@@ -60,6 +60,8 @@ sed -e "{
 echo "copy kiosk to /home/pi"
 
 cp -R -v kiosk /home/pi
+# make pi owner of /home/pi/kiosk
+chown -v -R pi:pi /home/pi/kiosk
 
 
 #################################################################################
