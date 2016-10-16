@@ -1,35 +1,16 @@
 <!-- <!DOCTYPE HTML> -->
 <html>
-<head>
-	<meta charset="UTF-8">
-	<title>Klassenübersicht</title>
-	<style>
-		#head {
-			font-size:120%;
-			font-weight: bold;
-			color:#FF9900;
-		}
-	</style>
-</head>
-
-<body onload="load_page()">
-
-	<h1 id="head"></h1>
-
-	<div id="content" style="width: 100%; height: 90%;"></div>
-    
-	<script>
-		/* Header shown for URL
-		var header="Lehrerübersicht";*/
-		// URL, shown by Website
+	<head>
+		<meta charset="UTF-8">
+		<title>Klassenübersicht</title>
+	</head>
+	<body onload="load_page()">
+		<div id="content"></div>
+		<script>
 		var url="https://klio.webuntis.com/WebUntis/monitor?school=hak-reutte&monitorType=dayoverview&format=Lehrer";
-
 		function load_page() {
-			document.getElementById("head").innerHTML = header;
 			document.getElementById("content").innerHTML = "<object type=\"text/html\" data=" + url + " style=\"width: 100%; height: 90%;\"></object>";
 		}
-	</script>
-
-</body>
-
+		</script>
+	</body>
 </html>
